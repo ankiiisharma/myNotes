@@ -1,7 +1,7 @@
 import NoteForm from "./NoteForm";
 import { NoteData, Tag } from "./App";
 
-export type NewNoteProps = {
+type NewNoteProps = {
   onSubmit: (data: NoteData) => void;
   onAddTag: (tag: Tag) => void;
   availableTags: Tag[];

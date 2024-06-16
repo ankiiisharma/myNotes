@@ -6,6 +6,8 @@ import { v4 as uuidV4 } from "uuid";
 
 type NoteFormProps = {
   onSubmit: (data: NoteData) => void;
+  onAddTag: (tag: Tag) => void;
+  availableTags: Tag[];
 };
 
 function NoteForm({ onSubmit, onAddTag, availableTags }: NoteFormProps) {
@@ -20,7 +22,7 @@ function NoteForm({ onSubmit, onAddTag, availableTags }: NoteFormProps) {
     onSubmit({
       title: titleRef.current!.value,
       markdown: markdownRef.current!.value,
-      tags: [],
+      tags: selectedTags,
     });
 
     console.log("Form submitted");
@@ -68,9 +70,9 @@ function NoteForm({ onSubmit, onAddTag, availableTags }: NoteFormProps) {
               value={selectedTags.map((tag) => {
                 return { label: tag.label, value: tag.id };
               })}
-              // options={availableTags.map((tag) => {
-              //   return { label: tag.label, value: tag.id };
-              // })}
+              options={availableTags.map((tag) => {
+                return { label: tag.label, value: tag.id };
+              })}
               onChange={(tags) => {
                 setSelectedTags(
                   tags.map((tag) => {

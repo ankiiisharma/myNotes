@@ -5,6 +5,7 @@ import "./App.css";
 import { v4 as uuidV4 } from "uuid";
 
 import NewNote from "./NewNote";
+import Home from "./Home";
 import { useLocalStorage } from "./useLocalStorage";
 
 export type Note = {
@@ -49,39 +50,34 @@ function App() {
     setNotes((prevNotes) => {
       return [
         ...prevNotes,
-        { ...data, id: uuidV4(), tagIds: tags.map((tag) => tag.id) },
+        { ...data, id: uuidV4(), tagsIds: tags.map((tag) => tag.id) },
       ];
     });
   }
 
-  function onAddTag(tag: Tag) {
+  function addTag(tag: Tag) {
     setTags((prev) => [...prev, tag]);
   }
 
   return (
     <div className="my-4">
       <Routes>
-        <Route
-          path="/"
-          element={
-            <h1 className="text-white font-bold"> Hii you are at "home"</h1>
-          }
-        />
-        <Route path="*" element={<Navigate to={"/"} />} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/new"
           element={
             <NewNote
               onSubmit={onCreateNote}
-              onAddTag={onAddTag}
+              onAddTag={addTag}
               availableTags={tags}
             />
           }
         />
         <Route path="/:id">
-          <Route index element={<h1>show notes</h1>} />
-          <Route path="edit" element={<h1>edit notes</h1>} />
+          <Route index element={<h1>Show notes</h1>} />
+          <Route path="edit" element={<h1>Edit notes</h1>} />
         </Route>
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
   );
