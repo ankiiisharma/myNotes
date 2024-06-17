@@ -5,8 +5,8 @@ import "./App.css";
 import { v4 as uuidV4 } from "uuid";
 
 import NewNote from "./NewNote";
-import Home from "./Home";
 import { useLocalStorage } from "./useLocalStorage";
+import NoteList from "./NoteList";
 
 export type Note = {
   id: string;
@@ -62,7 +62,10 @@ function App() {
   return (
     <div className="my-4">
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={<NoteList notes={notesWithTags} availableTags={tags} />}
+        />
         <Route
           path="/new"
           element={
