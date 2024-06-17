@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import ReactSelect from "react-select";
 import { Note, Tag } from "./App";
+import { Link } from "react-router-dom";
 
 type NoteCardProps = {
   title: string;
@@ -31,18 +32,22 @@ function NoteList({ availableTags, notes }: NoteListProps) {
   }, [title, selectedTags, notes]);
 
   return (
-    <div className="flex flex-col items-center p-4 min-h-screen">
+    <div className="flex flex-col items-center p-4 min-h-screen ">
       <div className="w-full max-w-lg">
         <div className="mb-5">
           <div className="flex justify-between items-center mb-11">
-            <h1 className="text-3xl font-black">myNotes</h1>
-            <div className="flex gap-3">
-              <button
-                type="button"
-                className="text-white bg-blue-700 hover:bg-blue-800 rounded-lg text-sm px-5 py-2.5"
-              >
-                Create
-              </button>
+            <h1 className="text-3xl font-black underline decoration-sky-500 hover:translate-y-1 cursor-pointer transition-1">
+              myNotes
+            </h1>
+            <div className="flex gap-3 ">
+              <Link to={"/new"}>
+                <button
+                  type="button"
+                  className="text-white bg-blue-700 hover:bg-blue-800 rounded-lg text-sm px-5 py-2.5"
+                >
+                  Create
+                </button>
+              </Link>
               <button
                 type="button"
                 className="text-slate-800 bg-slate-300 hover:bg-slate-500 rounded-lg text-sm px-5 py-2.5"
@@ -101,7 +106,7 @@ function NoteList({ availableTags, notes }: NoteListProps) {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3 w-full max-w-lg">
+      <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-3 w-full max-w-lg mt-9">
         {filteredNotes.map((note) => (
           <div key={note.id}>
             <NoteCard id={note.id} title={note.title} tags={note.tags} />
@@ -112,8 +117,26 @@ function NoteList({ availableTags, notes }: NoteListProps) {
   );
 }
 
-export function NoteCard({ id, title, tags }: NoteCardProps) {
-  return <h1> hiiii </h1>;
+function NoteCard({ id, title, tags }: NoteCardProps) {
+  return (
+    <>
+      <div className="bg-slate-200 border rounded-lg p-9 shadow hover:bg-slate-400 cursor-pointer">
+        <h2 className="text-xl font-bold text-slate-800 flex justify-center ">
+          {title}
+        </h2>
+        <div className="flex flex-wrap gap-2 mt-9">
+          {tags.map((tag) => (
+            <span
+              key={tag.id}
+              className="bg-slate-700 text-ehite-800 text-sm font-medium px-2.5 py-0.5 rounded"
+            >
+              {tag.label}
+            </span>
+          ))}
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default NoteList;
