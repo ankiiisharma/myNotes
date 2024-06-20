@@ -1,4 +1,4 @@
-import React, { FormEvent, useRef, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import CreatableReactSelect from "react-select/creatable";
 import { Link } from "react-router-dom";
 import { NoteData, Tag } from "./App";
@@ -9,15 +9,26 @@ type NoteFormProps = {
   onSubmit: (data: NoteData) => void;
   onAddTag: (tag: Tag) => void;
   availableTags: Tag[];
-};
+} & Partial<NoteData>;
 
-function NoteForm({ onSubmit, onAddTag, availableTags }: NoteFormProps) {
+function NoteForm({
+  onSubmit,
+  onAddTag,
+  availableTags,
+  title = "",
+  markdown = "",
+  tags = [],
+}: NoteFormProps) {
   const Navigate = useNavigate();
 
   const titleRef = useRef<HTMLInputElement>(null);
   const markdownRef = useRef<HTMLTextAreaElement>(null);
 
-  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+  const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
+
+  useEffect(() => {
+    setSelectedTags(tags);
+  }, [tags]);
 
   const submitForm = (event: FormEvent) => {
     event.preventDefault();
@@ -54,6 +65,7 @@ function NoteForm({ onSubmit, onAddTag, availableTags }: NoteFormProps) {
               className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Enter Title"
               required
+              defaultValue={title}
             />
           </div>
 
@@ -104,6 +116,7 @@ function NoteForm({ onSubmit, onAddTag, availableTags }: NoteFormProps) {
             ref={markdownRef}
             className="block w-full p-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Enter Description"
+            defaultValue={markdown}
             required
           ></textarea>
         </div>

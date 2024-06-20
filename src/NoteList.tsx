@@ -120,21 +120,23 @@ function NoteList({ availableTags, notes }: NoteListProps) {
 function NoteCard({ id, title, tags }: NoteCardProps) {
   return (
     <>
-      <div className="bg-slate-200 border rounded-lg p-9 shadow hover:bg-slate-400 cursor-pointer -translate-y-6">
-        <h2 className="text-xl font-bold text-slate-800 flex justify-center ">
-          {title}
-        </h2>
-        <div className="flex flex-wrap gap-2 mt-9">
-          {tags.map((tag) => (
-            <span
-              key={tag.id}
-              className="bg-slate-700 text-ehite-800 text-sm font-medium px-2.5 py-0.5 rounded"
-            >
-              {tag.label}
-            </span>
-          ))}
+      <Link to={`/${id}`}>
+        <div className="bg-slate-200 border rounded-lg p-9 shadow hover:bg-slate-400 cursor-pointer -translate-y-6">
+          <h2 className="text-xl font-bold text-slate-800 flex justify-center ">
+            {title}
+          </h2>
+          <div className="flex flex-wrap gap-2 mt-9">
+            {tags.map((tag) => (
+              <span
+                key={tag.id}
+                className="bg-slate-700 text-ehite-800 text-sm font-medium px-2.5 py-0.5 rounded"
+              >
+                {tag.label}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 }
