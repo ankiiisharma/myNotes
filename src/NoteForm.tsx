@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import CreatableReactSelect from "react-select/creatable";
 import { Link } from "react-router-dom";
 import { NoteData, Tag } from "./App";
