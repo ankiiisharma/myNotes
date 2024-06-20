@@ -20,14 +20,14 @@ function NoteList({ availableTags, notes }: NoteListProps) {
 
   const filteredNotes = useMemo(() => {
     return notes.filter((note) => {
-      return (
-        ((title === "" ||
-          note.title.toLowerCase().includes(title.toLowerCase())) &&
-          selectedTags.length === 0) ||
+      const titleMatch =
+        title === "" || note.title.toLowerCase().includes(title.toLowerCase());
+      const tagsMatch =
+        selectedTags.length === 0 ||
         selectedTags.every((tag) =>
           note.tags.some((noteTag) => noteTag.id === tag.id)
-        )
-      );
+        );
+      return titleMatch && tagsMatch;
     });
   }, [title, selectedTags, notes]);
 
@@ -120,7 +120,7 @@ function NoteList({ availableTags, notes }: NoteListProps) {
 function NoteCard({ id, title, tags }: NoteCardProps) {
   return (
     <>
-      <div className="bg-slate-200 border rounded-lg p-9 shadow hover:bg-slate-400 cursor-pointer">
+      <div className="bg-slate-200 border rounded-lg p-9 shadow hover:bg-slate-400 cursor-pointer -translate-y-6">
         <h2 className="text-xl font-bold text-slate-800 flex justify-center ">
           {title}
         </h2>
