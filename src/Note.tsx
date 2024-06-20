@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import { useNote } from "./NoteLayout";
+import { useNavigate } from "react-router-dom";
 
-function Note() {
+type NoteProps = {
+  onDelete: (id: string) => void;
+};
+
+function Note({ onDelete }: NoteProps) {
+  const navigate = useNavigate();
   const note = useNote();
   return (
     <>
@@ -14,10 +20,20 @@ function Note() {
 
           {/* BUTTON */}
           <div className="text-yellow-500 ">
-            <button> Submit </button>
             <Link to={`/${note.id}/edit`}>
               <button> edit </button>
             </Link>
+
+            <button
+              onClick={() => {
+                onDelete(note.id);
+                navigate("/");
+              }}
+            >
+              {" "}
+              delete{" "}
+            </button>
+
             <Link to={"/"}>
               <button> home </button>
             </Link>

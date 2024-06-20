@@ -26,10 +26,6 @@ function NoteForm({
 
   const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
 
-  useEffect(() => {
-    setSelectedTags(tags);
-  }, [tags]);
-
   const submitForm = (event: FormEvent) => {
     event.preventDefault();
 
@@ -82,19 +78,23 @@ function NoteForm({
                 const newTag = { id: uuidV4(), label };
                 onAddTag(newTag);
                 setSelectedTags((prev) => [...prev, newTag]);
+                console.log("New tag created:", newTag); // Debugging log
               }}
-              value={selectedTags.map((tag) => {
-                return { label: tag.label, value: tag.id };
-              })}
-              options={availableTags.map((tag) => {
-                return { label: tag.label, value: tag.id };
-              })}
+              value={selectedTags.map((tag) => ({
+                label: tag.label,
+                value: tag.id,
+              }))}
+              options={availableTags.map((tag) => ({
+                label: tag.label,
+                value: tag.id,
+              }))}
               onChange={(tags) => {
-                setSelectedTags(
-                  tags.map((tag) => {
-                    return { label: tag.label, id: tag.value };
-                  })
-                );
+                const updatedTags = tags.map((tag) => ({
+                  label: tag.label,
+                  id: tag.value,
+                }));
+                setSelectedTags(updatedTags);
+                console.log("Tags changed:", updatedTags); // Debugging log
               }}
               className="basic-multi-select text-slate-400"
               classNamePrefix="select"
