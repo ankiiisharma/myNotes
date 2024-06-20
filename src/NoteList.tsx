@@ -136,7 +136,7 @@ function NoteCard({ id, title, tags }: NoteCardProps) {
   return (
     <>
       <Link to={`/${id}`}>
-        <div data-aos="fade-up" data-aos-anchor-placement="top-center">
+        <div data-aos="fade-up">
           <div className="bg-slate-200 border rounded-lg p-9 shadow hover:bg-slate-400 cursor-pointer -translate-y-6 ">
             <h2 className="text-xl font-bold text-slate-800 flex justify-center ">
               {title}
